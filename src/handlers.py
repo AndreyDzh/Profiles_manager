@@ -1,28 +1,29 @@
-import os
+import os, sys
 import subprocess
 
 from questionary import text, confirm
 from src.utils import profiles_load, profiles_dump
-from config import DATA_DIR, HOMEPAGE_DEFAULT, PROXY_DEFAULT
+from config import DATA_DIR, HOMEPAGE_DEFAULT, PROXY_DEFAULT, WINDOWS_CHROME_PATH
 
 def profile_open(profile):
     data = profiles_load()
-    profile_data = data[profile]
-    
+    p = data[profile]
+
     dir_to_profile = os.path.join(DATA_DIR, profile)
+    proxy = p["proxy"]
+    homepage = p["homepage"]
 
-    proxy = profile_data["proxy"]
-    homepage = profile_data["homepage"]
-
-    args = [
-        "open", "-na", "Google Chrome", "--args",
+    flags = [
         f'--user-data-dir={dir_to_profile}',
         '--profile-directory=Default',
         f'--proxy-server={proxy}',
         homepage,
     ]
 
-    subprocess.Popen(args)
+    if sys.platform == "darwin":
+        subprocess.Popen(["open", "-na", "Google Chrome", "--args", *flags])
+    else:  # Windows
+        subprocess.Popen([WINDOWS_CHROME_PATH, *flags])
 
 def create_new_profile():
     data = profiles_load()
