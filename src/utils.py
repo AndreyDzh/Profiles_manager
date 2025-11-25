@@ -2,7 +2,7 @@ import json
 from config import DATA_DIR
 from pathlib import Path
 
-PATH = Path(DATA_DIR) / "profiles.json"
+PATH = Path(DATA_DIR) / "profiles_data" / "profiles.json"
 
 def create_json_file():
     PATH.parent.mkdir(parents=True, exist_ok=True)

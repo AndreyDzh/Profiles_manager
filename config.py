@@ -1,4 +1,5 @@
-DATA_DIR = "Projects/Profiles_manager/data"  # PATH TO DATA WITH PROFILES, CHANGE PATH TO YOU FOLDER
+DATA_DIR = ""  #If you run it from the project folder, this field can be empty; if it doesn't work, enter the path to project folder 
+
 HOMEPAGE_DEFAULT = "https://ipaddress.my" # CHROME HOMEPAGE 
 PROXY_DEFAULT = "" #PROXY
 

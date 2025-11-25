@@ -1,6 +1,7 @@
 import os, sys
 import subprocess
 
+from pathlib import Path
 from questionary import text, confirm
 from src.utils import profiles_load, profiles_dump
 from config import DATA_DIR, HOMEPAGE_DEFAULT, PROXY_DEFAULT, WINDOWS_CHROME_PATH
@@ -9,7 +10,7 @@ def profile_open(profile):
     data = profiles_load()
     p = data[profile]
 
-    dir_to_profile = os.path.join(DATA_DIR, profile)
+    dir_to_profile = Path(DATA_DIR) / "profiles_data" / profile
     proxy = p["proxy"]
     homepage = p["homepage"]
 
