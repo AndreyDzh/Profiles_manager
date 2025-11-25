@@ -1,4 +1,5 @@
 env/
+config.py
 profiles_data/
 .env
 __pycache__/

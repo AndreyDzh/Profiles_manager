@@ -48,7 +48,11 @@ Profiles are launched from the terminal via command line.
    pip install -r requirements.txt
    ```
 
-5. Run `main.py`:
+5. Set up the config:
+   - Rename `config_example.py` to `config.py`
+   - Open `config.py` and adjust the settings (paths, proxy, etc.) to your environment
+
+6. Run `main.py`:
    ```bash
    python main.py
    ```
