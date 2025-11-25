@@ -54,7 +54,7 @@ def delete_profile(profile):
     
     data.pop(profile)
 
-    dir_to_profile = os.path.join(DATA_DIR, profile)
+    dir_to_profile = Path(DATA_DIR) / "profiles_data" / profile
 
     if os.path.isdir(dir_to_profile):
         if sys.platform == "darwin":
