@@ -1,3 +1,5 @@
+#CHANGE NAME TO config.py
+
 DATA_DIR = ""  #PATH TO PROJECT FOLDER, FOR EXAMPLE /Users/User1/Projects/Profiles_manager
 
 HOMEPAGE_DEFAULT = "https://ipaddress.my" # CHROME HOMEPAGE 
