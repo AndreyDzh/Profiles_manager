@@ -1,6 +1,5 @@
 from questionary import select, Choice
 from src.utils import profiles_load
-from src.profiles import Profile
 
 def main_menu():
     selected = select(

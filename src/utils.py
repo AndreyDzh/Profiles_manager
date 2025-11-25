@@ -1,7 +1,8 @@
 import json
-from config import DATA_DIR
 from pathlib import Path
+
 from src.profiles import Profile
+from config import DATA_DIR
 
 path = Path(DATA_DIR) / "profiles_data" / "profiles.json"
 
