@@ -14,6 +14,11 @@ Profiles are launched from the terminal via command line.
 ## PROGRAM — FIRST RUN
 
 1. Open the project folder.  
+
+   ```bash
+   cd "/path/to/folder"
+   ```
+
 2. Create a virtual environment inside it:
 
    **macOS**
