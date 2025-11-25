@@ -3,6 +3,6 @@
 DATA_DIR = ""  #PATH TO PROJECT FOLDER, FOR EXAMPLE /Users/User1/Projects/Profiles_manager
 
 HOMEPAGE_DEFAULT = "https://ipaddress.my" # CHROME HOMEPAGE 
-PROXY_DEFAULT = "" #PROXY
+PROXY_DEFAULT = "127.0.0.1:8080" #PROXY IP:PORT
 
 WINDOWS_CHROME_PATH = "C:\Program Files\Google\Chrome\Application\chrome.exe" # FOR WINDOWS USERS 
