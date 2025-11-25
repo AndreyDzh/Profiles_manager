@@ -1,24 +1,23 @@
 import os, sys
 import subprocess
 
+from src.profiles import Profile
+
 from pathlib import Path
 from questionary import text, confirm
 from src.utils import profiles_load, profiles_dump
 from config import DATA_DIR, HOMEPAGE_DEFAULT, PROXY_DEFAULT, WINDOWS_CHROME_PATH
 
 def profile_open(profile):
-    data = profiles_load()
-    p = data[profile]
 
-    dir_to_profile = Path(DATA_DIR) / "profiles_data" / profile
-    proxy = p["proxy"]
-    homepage = p["homepage"]
+    dir_to_profile = Path(DATA_DIR) / "profiles_data" / profile.name
+    print(dir_to_profile)
 
     flags = [
         f'--user-data-dir={dir_to_profile}',
         '--profile-directory=Default',
-        f'--proxy-server={proxy}',
-        homepage,
+        f'--proxy-server={profile.proxy}',
+        profile.homepage,
     ]
 
     if sys.platform == "darwin":
@@ -30,17 +29,21 @@ def create_new_profile():
     data = profiles_load()
     print("‼️ For cancel leave the next field empty ‼️")
     profile_name = text("Profile name:", qmark= "⏩").ask().strip()
-    if not profile_name or profile_name in data:
+
+    if not profile_name:
         print("📛 CANCELED 📛")
         return
     
+    if any(p.name.lower() == profile_name for p in data):
+        print("📛 PROFILE WITH THIS NAME ALREADY EXIST 📛")
+        return
+
     proxy = text("Proxy:", qmark="⏩").ask() or PROXY_DEFAULT
     homepage = text("Homepage:", qmark="⏩").ask() or HOMEPAGE_DEFAULT
+ 
+    new_profile = Profile(profile_name, proxy, homepage)
+    data.append(new_profile)
 
-    data[profile_name] = {
-        "proxy": proxy,
-        "homepage": homepage
-    }
     profiles_dump(data)
     print("✅ PROFILE ADDED ✅")
 
@@ -52,9 +55,9 @@ def delete_profile(profile):
         print("📛 CANCELED 📛")
         return
     
-    data.pop(profile)
+    data = [p for p in data if p.name != profile.name]
 
-    dir_to_profile = Path(DATA_DIR) / "profiles_data" / profile
+    dir_to_profile = Path(DATA_DIR) / "profiles_data" / profile.name
 
     if os.path.isdir(dir_to_profile):
         if sys.platform == "darwin":
