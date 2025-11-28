@@ -7,6 +7,13 @@ class Profile:
         self.proxy = proxy
         self.homepage = homepage
     
+    def __eq__(self, other):
+        if other.__class__ is self.__class__:
+            return (self.name == other.name and
+                    self.proxy == other.proxy and
+                    self.homepage == other.homepage)
+        return NotImplemented
+    
     def to_dict(self) -> dict:
         return {
             "name": self.name,
@@ -20,6 +27,6 @@ class Profile:
                    proxy= data.get("proxy"),
                    homepage= data.get("homepage")
         )
-
+    
 
 

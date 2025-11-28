@@ -8,15 +8,12 @@ class ProfileService:
 
     def get_profile_list(self):
         return profiles_load()
-
-    def open(self, profile: Profile) -> None: 
+    
+    def open_profile(self, profile: Profile) -> None: 
         open_profile_in_browser(profile)
     
-    def create(self, name, proxy, homepage) -> Profile:
+    def create_profile(self, name, proxy, homepage) -> Profile:
         
-        if not name:
-            raise ValueError("Empty name")
-
         profiles = profiles_load()
 
         if any(profile.name.lower() == name.lower() for profile in profiles):
@@ -30,10 +27,32 @@ class ProfileService:
 
         profiles.append(profile)
         save_profiles(profiles)
+        return profile
 
-    def delete(self, profile: Profile) -> None:
+    def delete_profile(self, profile: Profile) -> None:
         profiles = profiles_load()
         profiles = [p for p in profiles if p.name != profile.name]
         save_profiles(profiles)
         remove_profile_dir(profile)
-        
+    
+    def update_profile(self, profile: Profile, field: str, new_value) -> Profile:
+        profiles = profiles_load()
+
+        DEFAULTS = {
+            "name": "Default",
+            "proxy": PROXY_DEFAULT,
+            "homepage": HOMEPAGE_DEFAULT,
+        }
+
+        if isinstance(new_value, str) and new_value.upper() == "DEFAULT" and field in DEFAULTS:
+            new_value = DEFAULTS[field]
+
+        for p in profiles:
+            if p.name == profile.name:
+                if not hasattr(p, field):
+                    raise ValueError(f"Profile has no '{field}' attribute")
+                setattr(p, field, new_value)
+                save_profiles(profiles)
+                return p
+        else:
+            raise ValueError(f"Profile '{profile.name}' not found")

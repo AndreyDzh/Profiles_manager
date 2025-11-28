@@ -37,3 +37,18 @@ def profile_list():
         pointer="✅"
     ).ask()
     return selected
+
+def profile_menu(profile):
+    selected = select(
+        message= f"SELECTED {profile.name}",
+        choices= [
+            Choice("Open", value= "open_profile"),
+            Choice(f"Change name({profile.name})", value= "change_name"),
+            Choice(f"Change proxy({profile.proxy})", value= "change_proxy"),
+            Choice(f"Change homepage({profile.homepage})", value= "change_homepage"),
+            Choice("Back", value= "back")
+        ],
+        qmark= "⚙️",
+        pointer= "✅"
+    ).ask()
+    return selected
