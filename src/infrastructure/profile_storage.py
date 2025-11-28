@@ -1,15 +1,15 @@
 import json
 from pathlib import Path
 
-from src.profiles import Profile
-from config import DATA_DIR
+from src.models.profiles import Profile
+from config import FOLDER_PATH, DATA_DIR_NAME, JSON_FILE_NAME
 
-path = Path(DATA_DIR) / "profiles_data" / "profiles.json"
+path = Path(FOLDER_PATH) / DATA_DIR_NAME / JSON_FILE_NAME
 
 def profiles_load():
     if not path.exists():
         path.parent.mkdir(parents=True, exist_ok=True)
-        profiles_dump([])
+        save_profiles([])
         return []
     
     with path.open("r", encoding= "utf-8") as f:
@@ -17,7 +17,7 @@ def profiles_load():
         profiles = [Profile.from_dict(item) for item in raw_dict]
         return profiles
         
-def profiles_dump(data):
+def save_profiles(data):
     processed_data = [item.to_dict() for item in data]
      
     with path.open("w", encoding="utf-8") as f:

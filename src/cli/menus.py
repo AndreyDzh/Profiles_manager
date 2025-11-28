@@ -1,5 +1,8 @@
 from questionary import select, Choice
-from src.utils import profiles_load
+from src.infrastructure.profile_storage import profiles_load
+from src.services.profile_service import ProfileService
+
+service = ProfileService()
 
 def main_menu():
     selected = select(
@@ -16,14 +19,14 @@ def main_menu():
     return selected
 
 def profile_list():
-    data_profiles = profiles_load() 
-    if not data_profiles:
+    profiles = service.get_profile_list() 
+    if not profiles:
         print("📭 No profiles found")
         return "back"
     
     profiles_to_choice = [
         Choice(title=profile.name, value=profile)
-        for profile in data_profiles
+        for profile in profiles
     ]
     profiles_to_choice.append(Choice("Back", value="back"))
 
